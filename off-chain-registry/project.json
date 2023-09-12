@@ -1,0 +1,77 @@
+{
+  "name": "off-chain-registry",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "off-chain-registry/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/off-chain-registry",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "off-chain-registry/src/main.ts",
+        "tsConfig": "off-chain-registry/tsconfig.app.json",
+        "assets": ["off-chain-registry/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "off-chain-registry:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "off-chain-registry:build:development"
+        },
+        "production": {
+          "buildTarget": "off-chain-registry:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["off-chain-registry/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "off-chain-registry/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
