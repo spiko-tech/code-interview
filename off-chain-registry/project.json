@@ -15,7 +15,6 @@
         "bundle": false,
         "main": "off-chain-registry/src/main.ts",
         "tsConfig": "off-chain-registry/tsconfig.app.json",
-        "assets": ["off-chain-registry/src/assets"],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
