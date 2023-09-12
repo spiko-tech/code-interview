@@ -15,7 +15,6 @@
         "bundle": false,
         "main": "mint-burn-admin/src/main.ts",
         "tsConfig": "mint-burn-admin/tsconfig.app.json",
-        "assets": ["mint-burn-admin/src/assets"],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
