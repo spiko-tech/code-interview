@@ -1,0 +1,77 @@
+{
+  "name": "mint-burn-admin",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "mint-burn-admin/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/mint-burn-admin",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "mint-burn-admin/src/main.ts",
+        "tsConfig": "mint-burn-admin/tsconfig.app.json",
+        "assets": ["mint-burn-admin/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "mint-burn-admin:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "mint-burn-admin:build:development"
+        },
+        "production": {
+          "buildTarget": "mint-burn-admin:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["mint-burn-admin/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "mint-burn-admin/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
