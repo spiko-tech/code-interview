@@ -1,0 +1,66 @@
+{
+  "name": "bowling",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "bowling/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/bowling",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "bowling/src/main.ts",
+        "tsConfig": "bowling/tsconfig.app.json",
+        "assets": ["bowling/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "bowling:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "bowling:build:development"
+        },
+        "production": {
+          "buildTarget": "bowling:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "bowling/jest.config.ts"
+      }
+    }
+  }
+}
